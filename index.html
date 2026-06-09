@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Copymatic AI — Content Generator untuk Digital Marketing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50:  '#eef2ff',
+              100: '#e0e7ff',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              900: '#1e1b4b',
+            },
+            surface: {
+              50:  '#f8fafc',
+              100: '#f1f5f9',
+              800: '#0f172a',
+              900: '#0a0f1e',
+              950: '#060a14',
+            }
+          },
+          animation: {
+            'fade-up':   'fadeUp 0.6s ease forwards',
+            'fade-in':   'fadeIn 0.5s ease forwards',
+            'pulse-slow':'pulse 3s ease-in-out infinite',
+            'float':     'float 6s ease-in-out infinite',
+            'shimmer':   'shimmer 2s linear infinite',
+          },
+          keyframes: {
+            fadeUp:  { from: { opacity: '0', transform: 'translateY(24px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
+            fadeIn:  { from: { opacity: '0' }, to: { opacity: '1' } },
+            float:   { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-12px)' } },
+            shimmer: { from: { backgroundPosition: '-200% 0' }, to: { backgroundPosition: '200% 0' } },
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body class="mesh-bg grain text-white antialiased">
+
+  <!-- ═══════════════════════════ NAVBAR ═══════════════════════════ -->
+  <nav class="navbar-glass fixed top-0 left-0 right-0 z-50" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-2.5 group">
+          <div class="w-8 h-8 rounded-lg btn-primary flex items-center justify-center">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 2L10 6H14L11 9L12 13L8 10.5L4 13L5 9L2 6H6L8 2Z" fill="white" fill-opacity="0.95"/>
+            </svg>
+          </div>
+          <span class="font-display font-700 text-lg tracking-tight">Copymatic<span class="gradient-text">AI</span></span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#features" class="text-sm text-slate-400 hover:text-white transition-colors duration-200">Features</a>
+          <a href="#how-it-works" class="text-sm text-slate-400 hover:text-white transition-colors duration-200">Cara Kerja</a>
+          <a href="#preview" class="text-sm text-slate-400 hover:text-white transition-colors duration-200">Preview</a>
+          <a href="#pricing" class="text-sm text-slate-400 hover:text-white transition-colors duration-200">Pricing</a>
+        </div>
+
+        <!-- CTA + Dark Mode -->
+        <div class="hidden md:flex items-center gap-3">
+          <button onclick="toggleDark()" id="theme-toggle" class="w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/5 transition-all" aria-label="Toggle dark mode">
+            <svg id="sun-icon" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+            <svg id="moon-icon" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          </button>
+          <a href="dashboard.html" class="btn-primary text-sm font-medium text-white px-5 py-2 rounded-xl">
+            Try Demo →
+          </a>
+        </div>
+
+        <!-- Mobile hamburger -->
+        <button onclick="toggleMobileMenu()" class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/5 text-slate-300 transition-colors" aria-label="Menu">
+          <svg id="ham-open" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg id="ham-close" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden border-t border-white/5">
+      <div class="px-4 py-4 space-y-1">
+        <a href="#features" onclick="toggleMobileMenu()" class="block px-4 py-2.5 rounded-xl text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-all">Features</a>
+        <a href="#how-it-works" onclick="toggleMobileMenu()" class="block px-4 py-2.5 rounded-xl text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-all">Cara Kerja</a>
+        <a href="#preview" onclick="toggleMobileMenu()" class="block px-4 py-2.5 rounded-xl text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-all">Preview</a>
+        <a href="#pricing" onclick="toggleMobileMenu()" class="block px-4 py-2.5 rounded-xl text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-all">Pricing</a>
+        <div class="pt-2 border-t border-white/5">
+          <a href="dashboard.html" class="block w-full btn-primary text-center text-sm font-medium text-white px-5 py-3 rounded-xl">
+            Try Demo →
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+  <section class="relative min-h-screen flex items-center pt-16" id="hero">
+
+    <!-- Decorative orbs -->
+    <div class="absolute top-32 left-1/4 w-72 h-72 bg-brand-600/10 rounded-full blur-3xl pointer-events-none animate-pulse-slow"></div>
+    <div class="absolute bottom-24 right-1/4 w-96 h-96 bg-violet-600/8 rounded-full blur-3xl pointer-events-none animate-pulse-slow" style="animation-delay:1.5s"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 text-center">
+
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 badge-shimmer px-4 py-2 rounded-full text-xs font-medium text-brand-400 mb-8 animate-fade-in">
+        <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+        AI-powered · Khusus Digital Marketing · Bahasa Indonesia
+      </div>
+
+      <!-- Headline -->
+      <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-800 leading-[1.05] tracking-tight mb-6 animate-fade-up">
+        Buat Konten Marketing<br class="hidden sm:block"/>
+        <span class="gradient-text">10× Lebih Cepat</span><br/>
+        dengan AI
+      </h1>
+
+      <!-- Subheadline -->
+      <p class="max-w-2xl mx-auto text-slate-400 text-lg sm:text-xl font-300 leading-relaxed mb-10 animate-fade-up" style="animation-delay:0.1s">
+        CopymaticAI menghasilkan caption, copywriting, email marketing, dan artikel blog berkualitas tinggi hanya dalam hitungan detik.
+      </p>
+
+      <!-- CTA buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up" style="animation-delay:0.2s">
+        <a href="dashboard.html" class="btn-primary w-full sm:w-auto font-display font-600 text-white px-8 py-4 rounded-2xl text-base flex items-center justify-center gap-2">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Coba Gratis Sekarang
+        </a>
+        <a href="#preview" class="w-full sm:w-auto font-medium text-slate-300 px-8 py-4 rounded-2xl text-base border border-white/10 hover:bg-white/5 hover:border-white/20 transition-all flex items-center justify-center gap-2">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Lihat Demo
+        </a>
+      </div>
+
+      <!-- Social proof -->
+      <div class="mt-14 flex flex-col items-center gap-4 animate-fade-up" style="animation-delay:0.3s">
+        <div class="flex items-center -space-x-2">
+          <img src="https://ui-avatars.com/api/?name=Ahmad+R&background=6366f1&color=fff&size=32&rounded=true" class="w-8 h-8 rounded-full border-2 border-surface-950" alt="user"/>
+          <img src="https://ui-avatars.com/api/?name=Budi+S&background=7c3aed&color=fff&size=32&rounded=true" class="w-8 h-8 rounded-full border-2 border-surface-950" alt="user"/>
+          <img src="https://ui-avatars.com/api/?name=Citra+D&background=4f46e5&color=fff&size=32&rounded=true" class="w-8 h-8 rounded-full border-2 border-surface-950" alt="user"/>
+          <img src="https://ui-avatars.com/api/?name=Dian+P&background=0284c7&color=fff&size=32&rounded=true" class="w-8 h-8 rounded-full border-2 border-surface-950" alt="user"/>
+          <div class="w-8 h-8 rounded-full border-2 border-surface-950 bg-brand-600 flex items-center justify-center text-[10px] font-bold">+2k</div>
+        </div>
+        <p class="text-sm text-slate-500">Dipercaya oleh <span class="text-slate-300 font-medium">2.400+ marketer</span> di Indonesia</p>
+      </div>
+
+      <!-- Stats bar -->
+      <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto animate-fade-up" style="animation-delay:0.4s">
+        <div class="stat-card px-5 py-4 text-center">
+          <div class="font-display text-2xl font-800 gradient-text" data-counter="2400" data-suffix="+">2400+</div>
+          <div class="text-xs text-slate-500 mt-1">Pengguna Aktif</div>
+        </div>
+        <div class="stat-card px-5 py-4 text-center">
+          <div class="font-display text-2xl font-800 gradient-text" data-counter="50000" data-suffix="+">50K+</div>
+          <div class="text-xs text-slate-500 mt-1">Konten Dibuat</div>
+        </div>
+        <div class="stat-card px-5 py-4 text-center">
+          <div class="font-display text-2xl font-800 gradient-text">10×</div>
+          <div class="text-xs text-slate-500 mt-1">Lebih Cepat</div>
+        </div>
+        <div class="stat-card px-5 py-4 text-center">
+          <div class="font-display text-2xl font-800 gradient-text">4.9★</div>
+          <div class="text-xs text-slate-500 mt-1">Rating Pengguna</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════ PROBLEM ═══════════════════════════ -->
+  <section id="problem" class="py-24 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <div class="inline-block text-xs font-medium text-red-400 bg-red-500/10 border border-red-500/20 px-3 py-1.5 rounded-full mb-4">😤 Masalah Nyata</div>
+        <h2 class="font-display text-3xl sm:text-4xl font-700 leading-tight mb-4">Mengapa Konten Marketing Terasa <br/><span class="text-red-400">Menyiksa?</span></h2>
+        <p class="text-slate-400 max-w-xl mx-auto">Setiap marketer pasti pernah mengalami ini...</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
+        <div class="problem-card p-6">
+          <div class="text-3xl mb-4">⏰</div>
+          <h3 class="font-display text-lg font-600 mb-2 text-red-300">Waktu Habis Nulis</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Satu caption Instagram bisa butuh 30–60 menit. Deadline menumpuk, engagement turun, tim frustrasi.</p>
+        </div>
+        <div class="problem-card p-6">
+          <div class="text-3xl mb-4">🧠</div>
+          <h3 class="font-display text-lg font-600 mb-2 text-red-300">Writer's Block Parah</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Halaman kosong yang menakutkan. Ide mandek. Terutama saat harus konsisten posting setiap hari.</p>
+        </div>
+        <div class="problem-card p-6">
+          <div class="text-3xl mb-4">📉</div>
+          <h3 class="font-display text-lg font-600 mb-2 text-red-300">Kualitas Tidak Konsisten</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Copy hari ini bagus, besok mediocre. Sulit menjaga voice brand yang konsisten di semua channel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Divider -->
+  <div class="max-w-7xl mx-auto px-8"><div class="divider-gradient"></div></div>
+
+  <!-- ═══════════════════════════ SOLUTION ═══════════════════════════ -->
+  <section id="solution" class="py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <div class="inline-block text-xs font-medium text-brand-400 bg-brand-500/10 border border-brand-500/20 px-3 py-1.5 rounded-full mb-4">✨ Solusi CopymaticAI</div>
+        <h2 class="font-display text-3xl sm:text-4xl font-700 leading-tight mb-4">
+          AI yang Paham <span class="gradient-text">Konteks Marketing</span><br/>Indonesia
+        </h2>
+        <p class="text-slate-400 max-w-xl mx-auto">Bukan sekadar AI biasa. Dilatih khusus untuk pola konsumsi konten dan bahasa marketing Indonesia.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <!-- Left: solution cards -->
+        <div class="space-y-4 reveal">
+          <div class="solution-card p-5 flex items-start gap-4">
+            <div class="icon-ring w-10 h-10 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <div>
+              <h4 class="font-display font-600 text-sm mb-1">Generate dalam 3 Detik</h4>
+              <p class="text-xs text-slate-400">Dari prompt ke konten siap pakai dalam hitungan detik. Tidak perlu editing besar.</p>
+            </div>
+          </div>
+          <div class="solution-card p-5 flex items-start gap-4">
+            <div class="icon-ring w-10 h-10 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>
+            </div>
+            <div>
+              <h4 class="font-display font-600 text-sm mb-1">Tone yang Bisa Disesuaikan</h4>
+              <p class="text-xs text-slate-400">Casual, formal, sales, atau storytelling — pilih sesuai persona brand kamu.</p>
+            </div>
+          </div>
+          <div class="solution-card p-5 flex items-start gap-4">
+            <div class="icon-ring w-10 h-10 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+            </div>
+            <div>
+              <h4 class="font-display font-600 text-sm mb-1">Konsisten & On-Brand</h4>
+              <p class="text-xs text-slate-400">Simpan brand voice kamu. AI akan selalu menulis sesuai karakter brand.</p>
+            </div>
+          </div>
+          <div class="solution-card p-5 flex items-start gap-4">
+            <div class="icon-ring w-10 h-10 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 3.182A6.978 6.978 0 0012 6c-1.4 0-2.703.413-3.793 1.119M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <div>
+              <h4 class="font-display font-600 text-sm mb-1">Multi-Format Output</h4>
+              <p class="text-xs text-slate-400">Caption IG, thread Twitter, email blast, artikel blog, iklan Meta — semua dalam satu tools.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: visual comparison -->
+        <div class="reveal">
+          <div class="glow-card p-6 text-sm">
+            <div class="flex items-center gap-2 mb-5">
+              <div class="w-3 h-3 rounded-full bg-red-500/70"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-500/70"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500/70"></div>
+              <span class="ml-2 text-slate-500 text-xs">CopymaticAI — Content Generator</span>
+            </div>
+            <div class="space-y-3">
+              <div>
+                <div class="text-xs text-slate-500 mb-1.5 font-medium uppercase tracking-wide">Prompt</div>
+                <div class="bg-white/5 rounded-xl px-4 py-3 text-slate-300 text-xs leading-relaxed border border-white/5">
+                  Buat caption Instagram untuk produk skincare pelembap wajah, target remaja 18-25 tahun, tone casual dan fun.
+                </div>
+              </div>
+              <div class="flex justify-center py-1">
+                <div class="flex items-center gap-2 text-brand-400">
+                  <div class="w-4 h-0.5 bg-brand-500/50"></div>
+                  <svg class="w-4 h-4 animate-pulse" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z" clip-rule="evenodd"/></svg>
+                  <span class="text-xs">AI Generating...</span>
+                  <div class="w-4 h-0.5 bg-brand-500/50"></div>
+                </div>
+              </div>
+              <div>
+                <div class="text-xs text-slate-500 mb-1.5 font-medium uppercase tracking-wide">Output ✨</div>
+                <div class="bg-brand-500/8 border border-brand-500/20 rounded-xl px-4 py-3 text-slate-200 text-xs leading-relaxed">
+                  <p>🌸 <strong>Bye bye kulit kering!</strong> Aku udah cobain pelembap ini selama 2 minggu dan hasilnya... <em>gila banget</em> 😭✨</p>
+                  <br/>
+                  <p>Dari kulit yang ngelupas parah → sekarang glowing macam dapet filter. Dan ini real, no edit bestie! 🙌</p>
+                  <br/>
+                  <p>Formula ringan, ga lengket, cocok buat kulit combo kaya aku. Link di bio untuk order ya! 🛒</p>
+                  <br/>
+                  <p class="text-slate-400">#SkincareIndonesia #PelembapWajah #GlowingSkin #SkincareRoutine</p>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-2">
+                <div class="flex items-center gap-2 text-xs text-slate-500">
+                  <svg class="w-3.5 h-3.5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
+                  <span>Generated in 1.8s</span>
+                </div>
+                <button class="text-xs text-brand-400 hover:text-brand-300 transition-colors flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                  Copy
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ HOW IT WORKS ═══════════════════════════ -->
+  <section id="how-it-works" class="py-24 relative">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-brand-600/5 rounded-full blur-3xl"></div>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <div class="inline-block text-xs font-medium text-brand-400 bg-brand-500/10 border border-brand-500/20 px-3 py-1.5 rounded-full mb-4">🔄 Cara Kerja</div>
+        <h2 class="font-display text-3xl sm:text-4xl font-700 leading-tight mb-4">3 Langkah. Selesai.</h2>
+        <p class="text-slate-400 max-w-lg mx-auto">Tidak perlu training khusus. Langsung bisa dipakai.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative reveal">
+        <!-- Connector line -->
+        <div class="hidden md:block absolute top-12 left-1/3 right-1/3 h-0.5 bg-gradient-to-r from-brand-600/30 via-brand-500/50 to-brand-600/30"></div>
+
+        <div class="glow-card p-8 text-center">
+          <div class="w-14 h-14 btn-primary rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <span class="font-display font-800 text-lg">1</span>
+          </div>
+          <h3 class="font-display text-lg font-600 mb-3">Tulis Prompt</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Ceritakan tentang produk, target audience, dan tujuan konten kamu. Semakin detail, semakin bagus hasilnya.</p>
+        </div>
+
+        <div class="glow-card p-8 text-center">
+          <div class="w-14 h-14 bg-gradient-to-br from-violet-500 to-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-violet-500/30">
+            <span class="font-display font-800 text-lg">2</span>
+          </div>
+          <h3 class="font-display text-lg font-600 mb-3">Pilih Tone & Format</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Tentukan nada tulisan dan jenis konten. Casual untuk IG? Formal untuk email? Semuanya tersedia.</p>
+        </div>
+
+        <div class="glow-card p-8 text-center">
+          <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-blue-500/30">
+            <span class="font-display font-800 text-lg">3</span>
+          </div>
+          <h3 class="font-display text-lg font-600 mb-3">Copy & Pakai</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Hasil langsung siap. Copy sekali klik, paste ke platform marketing kamu. Selesai!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FEATURES ═══════════════════════════ -->
+  <section id="features" class="py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <div class="inline-block text-xs font-medium text-brand-400 bg-brand-500/10 border border-brand-500/20 px-3 py-1.5 rounded-full mb-4">⚡ Fitur Unggulan</div>
+        <h2 class="font-display text-3xl sm:text-4xl font-700 leading-tight mb-4">Semua yang Kamu Butuhkan<br/><span class="gradient-text">dalam Satu Platform</span></h2>
+        <p class="text-slate-400 max-w-xl mx-auto">Dari ideasi sampai publish, CopymaticAI covers semua workflow konten marketing kamu.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 reveal">
+        <!-- Feature 1 -->
+        <div class="glow-card p-6">
+          <div class="icon-ring w-12 h-12 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+          </div>
+          <h3 class="font-display text-base font-600 mb-2">Caption Sosmed</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Instagram, TikTok, Twitter, LinkedIn — generate caption yang sesuai platform dan audiensnya.</p>
+          <div class="mt-4 flex items-center gap-2 text-xs text-brand-400">
+            <span class="w-1.5 h-1.5 bg-brand-400 rounded-full"></span>
+            10+ template siap pakai
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="glow-card p-6">
+          <div class="icon-ring w-12 h-12 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          </div>
+          <h3 class="font-display text-base font-600 mb-2">Email Marketing</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Subject line yang kena, body yang mengkonversi, CTA yang compelling. Email automation-ready.</p>
+          <div class="mt-4 flex items-center gap-2 text-xs text-brand-400">
+            <span class="w-1.5 h-1.5 bg-brand-400 rounded-full"></span>
+            Open rate +40% rata-rata
+          </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="glow-card p-6">
+          <div class="icon-ring w-12 h-12 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+          <h3 class="font-display text-base font-600 mb-2">Blog & Artikel</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Artikel SEO-ready dengan struktur heading yang benar, meta description, dan keywords natural.</p>
+          <div class="mt-4 flex items-center gap-2 text-xs text-brand-400">
+            <span class="w-1.5 h-1.5 bg-brand-400 rounded-full"></span>
+            SEO score 85+ otomatis
+          </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="glow-card p-6">
+          <div class="icon-ring w-12 h-12 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
+          </div>
+          <h3 class="font-display text-base font-600 mb-2">Ad Copy</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Iklan Meta, Google Ads, TikTok Ads dengan headline yang eye-catching dan konversi tinggi.</p>
+          <div class="mt-4 flex items-center gap-2 text-xs text-brand-400">
+            <span class="w-1.5 h-1.5 bg-brand-400 rounded-full"></span>
+            CTR rata-rata meningkat 2×
+          </div>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="glow-card p-6">
+          <div class="icon-ring w-12 h-12 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          </div>
+          <h3 class="font-display text-base font-600 mb-2">Analytics Konten</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Track performa konten yang kamu buat. Lihat mana yang paling banyak dipakai dan yang terbaik.</p>
+          <div class="mt-4 flex items-center gap-2 text-xs text-brand-400">
+            <span class="w-1.5 h-1.5 bg-brand-400 rounded-full"></span>
+            Dashboard realtime
+          </div>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="glow-card p-6">
+          <div class="icon-ring w-12 h-12 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+          </div>
+          <h3 class="font-display text-base font-600 mb-2">Kustomisasi Tone</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Simpan brand voice kamu. AI akan mengingat dan selalu konsisten dengan karakter brand kamu.</p>
+          <div class="mt-4 flex items-center gap-2 text-xs text-brand-400">
+            <span class="w-1.5 h-1.5 bg-brand-400 rounded-full"></span>
+            5 tone preset + custom
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ PREVIEW (MOCK DASHBOARD) ═══════════════════════════ -->
+  <section id="preview" class="py-24 relative">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-500/30 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-500/30 to-transparent"></div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 reveal">
+        <div class="inline-block text-xs font-medium text-brand-400 bg-brand-500/10 border border-brand-500/20 px-3 py-1.5 rounded-full mb-4">🖥 Product Preview</div>
+        <h2 class="font-display text-3xl sm:text-4xl font-700 leading-tight mb-4">Interface Bersih,<br/><span class="gradient-text">Workflow Mulus</span></h2>
+        <p class="text-slate-400 max-w-lg mx-auto">Dashboard yang intuitif — tidak ada learning curve. Langsung pakai, langsung produktif.</p>
+      </div>
+
+      <!-- Mock browser window -->
+      <div class="mock-browser animate-float reveal">
+        <!-- Browser chrome -->
+        <div class="flex items-center gap-2 px-5 py-4 border-b border-white/5 bg-white/2">
+          <div class="flex gap-1.5">
+            <div class="w-3 h-3 rounded-full bg-red-500/70"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500/70"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500/70"></div>
+          </div>
+          <div class="flex-1 mx-4">
+            <div class="bg-white/5 rounded-lg px-4 py-1.5 text-xs text-slate-500 text-center max-w-sm mx-auto">
+              app.copymatic.ai/dashboard
+            </div>
+          </div>
+        </div>
+        <!-- Mock dashboard content -->
+        <div class="flex" style="min-height:360px">
+          <!-- Sidebar -->
+          <div class="w-48 border-r border-white/5 p-4 hidden sm:flex flex-col gap-1 bg-white/1 flex-shrink-0">
+            <div class="text-xs text-slate-600 uppercase tracking-wider px-2 mb-2 font-medium">Tools</div>
+            <div class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-brand-500/15 border border-brand-500/20">
+              <div class="w-4 h-4 rounded-md bg-brand-500 flex items-center justify-center">
+                <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3z" clip-rule="evenodd"/></svg>
+              </div>
+              <span class="text-xs text-brand-300 font-medium">Generator</span>
+            </div>
+            <div class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-white/5 cursor-pointer">
+              <div class="w-4 h-4 rounded-md bg-white/8 flex items-center justify-center">
+                <svg class="w-2.5 h-2.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+              </div>
+              <span class="text-xs text-slate-500">Analytics</span>
+            </div>
+            <div class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-white/5 cursor-pointer">
+              <div class="w-4 h-4 rounded-md bg-white/8 flex items-center justify-center">
+                <svg class="w-2.5 h-2.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/></svg>
+              </div>
+              <span class="text-xs text-slate-500">Settings</span>
+            </div>
+          </div>
+          <!-- Main content mock -->
+          <div class="flex-1 p-5 overflow-hidden">
+            <div class="mb-4">
+              <div class="h-4 bg-white/8 rounded-full w-40 mb-2"></div>
+              <div class="h-2.5 bg-white/4 rounded-full w-64"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <div>
+                <div class="h-2.5 bg-white/4 rounded-full w-16 mb-2"></div>
+                <div class="bg-white/5 border border-white/8 rounded-xl p-3 h-20 flex items-start">
+                  <div class="space-y-1.5 w-full">
+                    <div class="h-2 bg-white/10 rounded-full w-full"></div>
+                    <div class="h-2 bg-white/7 rounded-full w-3/4"></div>
+                    <div class="h-2 bg-white/5 rounded-full w-1/2"></div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="h-2.5 bg-white/4 rounded-full w-16 mb-2"></div>
+                <div class="bg-white/5 border border-white/8 rounded-xl p-3 h-20 flex items-center justify-between">
+                  <div class="space-y-1.5 flex-1">
+                    <div class="h-2 bg-white/10 rounded-full w-full"></div>
+                    <div class="h-2 bg-white/7 rounded-full w-2/3"></div>
+                  </div>
+                  <div class="w-8 h-8 rounded-lg bg-brand-500/20 border border-brand-500/20 flex items-center justify-center ml-3 flex-shrink-0">
+                    <svg class="w-4 h-4 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Fake generate button -->
+            <div class="flex items-center gap-3 mb-4">
+              <div class="h-9 bg-brand-500/80 rounded-xl flex-1 flex items-center justify-center">
+                <div class="h-2 bg-white/30 rounded-full w-24"></div>
+              </div>
+              <div class="h-9 bg-white/5 rounded-xl w-24 border border-white/8"></div>
+            </div>
+            <!-- Fake output -->
+            <div class="bg-brand-500/8 border border-brand-500/20 rounded-xl p-4">
+              <div class="space-y-2">
+                <div class="h-2 bg-brand-400/20 rounded-full w-full"></div>
+                <div class="h-2 bg-brand-400/15 rounded-full w-5/6"></div>
+                <div class="h-2 bg-brand-400/10 rounded-full w-4/5"></div>
+                <div class="h-2 bg-brand-400/10 rounded-full w-3/4"></div>
+                <div class="h-2 bg-brand-400/8 rounded-full w-1/2"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 text-center">
+        <a href="dashboard.html" class="btn-primary inline-flex items-center gap-2 font-display font-600 text-white px-8 py-4 rounded-2xl text-base">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          Buka Dashboard Langsung
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ TESTIMONIALS ═══════════════════════════ -->
+  <section class="py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 reveal">
+        <div class="inline-block text-xs font-medium text-brand-400 bg-brand-500/10 border border-brand-500/20 px-3 py-1.5 rounded-full mb-4">💬 Kata Mereka</div>
+        <h2 class="font-display text-3xl sm:text-4xl font-700 mb-4">Marketer Nyata, Hasil Nyata</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 reveal">
+        <div class="testimonial-card p-6">
+          <div class="flex items-center gap-1 mb-4">
+            <span class="text-yellow-400 text-sm">★★★★★</span>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed mb-5">"Dulu bikin 1 caption butuh setengah jam. Sekarang 30 detik. CopymaticAI literally mengubah workflow tim konten kami."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://ui-avatars.com/api/?name=Rini+A&background=6366f1&color=fff&size=36&rounded=true" class="w-9 h-9 rounded-full" alt="Rini A"/>
+            <div>
+              <div class="text-sm font-medium">Rini Anggraeni</div>
+              <div class="text-xs text-slate-500">Social Media Manager, Tokopedia</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card p-6 border-brand-500/20">
+          <div class="flex items-center gap-1 mb-4">
+            <span class="text-yellow-400 text-sm">★★★★★</span>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed mb-5">"Ad copy yang dihasilkan lebih converting dari yang manual kami buat. ROAS naik 35% setelah pakai tools ini untuk iklan Meta."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://ui-avatars.com/api/?name=Budi+H&background=7c3aed&color=fff&size=36&rounded=true" class="w-9 h-9 rounded-full" alt="Budi H"/>
+            <div>
+              <div class="text-sm font-medium">Budi Hartono</div>
+              <div class="text-xs text-slate-500">Digital Marketer, UMKM Kuliner</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card p-6">
+          <div class="flex items-center gap-1 mb-4">
+            <span class="text-yellow-400 text-sm">★★★★★</span>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed mb-5">"Sebagai freelancer, aku harus handle banyak klien. Sekarang bisa output 3× lebih banyak dengan kualitas yang justru meningkat."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://ui-avatars.com/api/?name=Sari+W&background=0284c7&color=fff&size=36&rounded=true" class="w-9 h-9 rounded-full" alt="Sari W"/>
+            <div>
+              <div class="text-sm font-medium">Sari Wulandari</div>
+              <div class="text-xs text-slate-500">Freelance Content Writer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ PRICING ═══════════════════════════ -->
+  <section id="pricing" class="py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="glow-card p-8 sm:p-10 mb-20 text-center max-w-4xl mx-auto reveal border-brand-500/30">
+        <div class="inline-block text-xs font-bold text-red-400 bg-red-500/10 border border-red-500/20 px-3 py-1.5 rounded-full mb-4">💡 Tahukah Anda?</div>
+        <h2 class="font-display text-2xl sm:text-3xl font-700 mb-4">Kenapa Bayar <span class="text-red-400 line-through">Rp 890.000/bulan</span> Kalau Bisa Bayar Sesuai Pakai?</h2>
+        <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto mb-8">
+          Berlangganan langsung ke ChatGPT Plus, Gemini Advanced, dan Grok Premium akan menghabiskan hampir Rp 1 Juta setiap bulan, padahal Anda mungkin tidak menulis setiap hari. Di CopymaticAI, saldo Anda tidak akan hangus di akhir bulan.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+          <div class="bg-red-500/5 border border-red-500/10 p-5 rounded-2xl">
+            <h4 class="font-bold text-slate-300 mb-3 text-sm">Langganan Mandiri (Boros) ❌</h4>
+            <ul class="text-xs text-slate-400 space-y-2">
+              <li>• ChatGPT Plus: ~Rp 320.000/bln</li>
+              <li>• Gemini Advanced: ~Rp 320.000/bln</li>
+              <li>• Grok Premium: ~Rp 250.000/bln</li>
+              <li class="pt-2 border-t border-white/5 font-bold text-red-400">Total: ~Rp 890.000 hangus tiap bulan</li>
+            </ul>
+          </div>
+          <div class="bg-brand-500/10 border border-brand-500/30 p-5 rounded-2xl">
+            <h4 class="font-bold text-white mb-3 text-sm">CopymaticAI (Hemat 88%) ✅</h4>
+            <ul class="text-xs text-slate-300 space-y-2">
+              <li>• Bayar hanya saat klik "Generate"</li>
+              <li>• Akses ke semua AI dalam 1 Dashboard</li>
+              <li>• Saldo kuota tidak hangus (No Expiry)</li>
+              <li class="pt-2 border-t border-white/5 font-bold text-brand-400">Mulai dari Rp 50.000 saja</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mb-14 reveal">
+        <div class="inline-block text-xs font-medium text-brand-400 bg-brand-500/10 border border-brand-500/20 px-3 py-1.5 rounded-full mb-4">💎 Paket Kuota AI</div>
+        <h2 class="font-display text-3xl sm:text-4xl font-700 mb-4">Pilih Kuota Sesuai Kebutuhanmu.</h2>
+        <p class="text-slate-400 max-w-lg mx-auto">Tidak ada kontrak. Tidak hangus bulanan. Bayar sekali, pakai kapan saja.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto reveal">
+        <div class="glow-card p-8">
+          <div class="text-xs font-medium text-slate-400 uppercase tracking-wider mb-4">Free Plan</div>
+          <div class="font-display text-4xl font-800 mb-1">Rp 0</div>
+          <div class="text-sm text-slate-500 mb-6">Gratis selamanya</div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-2.5 text-sm text-slate-300">✅ 5 Generate / hari (Model Lite)</li>
+            <li class="flex items-center gap-2.5 text-sm text-slate-300">✅ Akses Library "Koleksi Hook"</li>
+            <li class="flex items-center gap-2.5 text-sm text-slate-300">✅ 5 Template Dasar</li>
+            <li class="flex items-center gap-2.5 text-sm text-slate-400 line-through">❌ Akses Model GPT & Grok</li>
+          </ul>
+          <a href="dashboard.html" class="block w-full text-center py-3 rounded-xl border border-white/15 text-sm font-medium hover:bg-white/5 transition-all">Mulai Gratis</a>
+        </div>
+
+        <div class="glow-card p-8">
+          <div class="text-xs font-medium text-brand-400 uppercase tracking-wider mb-4">Starter Pack</div>
+          <div class="font-display text-4xl font-800 mb-1">Rp 50k</div>
+          <div class="text-sm text-slate-500 mb-6">Kuota ~30.000 Kata</div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-2.5 text-sm text-slate-200">✅ Saldo Kuota Tidak Hangus</li>
+            <li class="flex items-center gap-2.5 text-sm text-slate-200">✅ Bebas Pilih AI (GPT, Gemini, Grok)</li>
+            <li class="flex items-center gap-2.5 text-sm text-slate-200">✅ Semua Fitur Premium</li>
+            <li class="flex items-center gap-2.5 text-sm text-slate-200">✅ Est. 200+ Caption IG</li>
+          </ul>
+          <a href="dashboard.html" class="block w-full text-center py-3 rounded-xl border border-white/15 text-sm font-medium hover:bg-white/5 transition-all">Beli Kuota</a>
+        </div>
+
+        <div class="pricing-popular p-8">
+          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2">
+            <span class="bg-gradient-to-r from-brand-500 to-violet-500 text-white text-xs font-600 px-4 py-1.5 rounded-full font-display">✨ Paling Untung</span>
+          </div>
+          <div class="text-xs font-medium text-brand-400 uppercase tracking-wider mb-4">Pro Bundle</div>
+          <div class="font-display text-4xl font-800 mb-1">Rp 149k</div>
+          <div class="text-sm text-slate-500 mb-6">Kuota ~120.000 Kata</div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-2.5 text-sm text-slate-200">✅ Saldo Kuota Tidak Hangus</li>
+            <li class="flex items-center gap-2.5 text-sm text-slate-200">✅ Bebas Pilih AI Premium</li>
+            <li class="flex items-center gap-2.5 text-sm text-slate-200">✅ Harga Per Kata Lebih Murah</li>
+            <li class="flex items-center gap-2.5 text-sm text-slate-200">✅ Est. 100+ Artikel Blog SEO</li>
+            <li class="flex items-center gap-2.5 text-sm text-slate-200">✅ Prioritas Support</li>
+          </ul>
+          <a href="dashboard.html" class="btn-primary block w-full text-center py-3 rounded-xl text-sm font-600 font-display text-white">Beli Bundle Pro</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FINAL CTA ═══════════════════════════ -->
+  <section class="py-24 relative">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-brand-900/20 to-transparent"></div>
+    </div>
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="glow-card p-12 sm:p-16 reveal">
+        <div class="text-4xl mb-6">🚀</div>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-800 leading-tight mb-6">
+          Siap Buat Konten <span class="gradient-text">10× Lebih Cepat?</span>
+        </h2>
+        <p class="text-slate-400 text-lg mb-10 max-w-xl mx-auto">Bergabung dengan 2.400+ marketer Indonesia yang sudah membuktikan kekuatan AI untuk konten marketing mereka.</p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="dashboard.html" class="btn-primary w-full sm:w-auto font-display font-600 text-white px-10 py-4 rounded-2xl text-base flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            Coba Demo Gratis
+          </a>
+        </div>
+        <p class="text-xs text-slate-600 mt-6">Tidak perlu kartu kredit · Setup 30 detik · Cancel kapanpun</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+  <footer class="border-t border-white/5 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-2.5">
+          <div class="w-7 h-7 rounded-lg btn-primary flex items-center justify-center">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 2L10 6H14L11 9L12 13L8 10.5L4 13L5 9L2 6H6L8 2Z" fill="white" fill-opacity="0.95"/></svg>
+          </div>
+          <span class="font-display font-700 text-base">Copymatic<span class="gradient-text">AI</span></span>
+        </div>
+        <p class="text-sm text-slate-600 text-center">© 2025 CopymaticAI. Dibuat dengan ❤️ untuk marketer Indonesia.</p>
+        <div class="flex items-center gap-6">
+          <a href="#" class="text-sm text-slate-600 hover:text-slate-400 transition-colors">Privacy</a>
+          <a href="#" class="text-sm text-slate-600 hover:text-slate-400 transition-colors">Terms</a>
+          <a href="#" class="text-sm text-slate-600 hover:text-slate-400 transition-colors">Blog</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
